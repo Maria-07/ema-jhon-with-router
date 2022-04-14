@@ -49,7 +49,10 @@ const SignUp = () => {
   return (
     <div>
       <div className="mx-auto">
-        <form className=" border-2 p-11 mt-14 w-1/4 mb-4 mx-auto text-center">
+        <form
+          onSubmit={handleCreateUser}
+          className=" border-2 p-11 mt-14 w-1/4 mb-4 mx-auto text-center"
+        >
           <h1 className=" mb-8 text-3xl">Sign UP</h1>
           <div className=" text-left">
             <p>Email</p>
@@ -86,7 +89,6 @@ const SignUp = () => {
           <br />
           <p className=" text-red-600">{error}</p>
           <input
-            onClick={handleCreateUser}
             type="submit"
             className=" w-full bg-orange-400 rounded mt-6 mb-5 text-white  px-5 py-2 text-xl font-semibold"
             value="Sign UP"

@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const location = useLocation();
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
@@ -14,18 +17,21 @@ const Login = () => {
   const handleEmailBlur = (e) => setEmail(e.target.value);
   const handlePasswordBlur = (e) => setPassword(e.target.value);
 
+  if (user) {
+    navigate(from, { replace: true });
+  }
+
   const handleUserSignIn = (event) => {
     event.preventDefault();
     signInWithEmailAndPassword(email, password);
   };
 
-  if (user) {
-    navigate("/shop");
-  }
-
   return (
     <div className="mx-auto">
-      <form className=" border-2 p-11 mt-36 w-1/4 mb-4 mx-auto text-center">
+      <form
+        onSubmit={handleUserSignIn}
+        className=" border-2 p-11 mt-36 w-1/4 mb-4 mx-auto text-center"
+      >
         <h1 className=" mb-8 text-3xl">Login</h1>
         <div className=" text-left">
           <p>Email</p>
@@ -49,10 +55,9 @@ const Login = () => {
           />
         </div>
         <br />
-        <p>{error?.message}</p>
-        {loading && <p>Loading .. .. </p>}
+        {/* <p>{error?.message}</p>
+        {loading && <p>Loading .. .. </p>} */}
         <input
-          onClick={handleUserSignIn}
           type="submit"
           className=" w-full bg-orange-400 rounded mt-6 mb-5 text-white  px-5 py-2 text-xl font-semibold"
           value="login"

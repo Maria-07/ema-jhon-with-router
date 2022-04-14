@@ -33,7 +33,7 @@ const Orders = () => {
         </div>
         <div className="cart-container">
           <Cart cart={cart}>
-            <Link to="/inventory">
+            <Link to="/shipment">
               <button className=" text-white text-lg mt-10 py-2 px-5 bg-orange-400">
                 Proceed Check-Out{" "}
                 <FontAwesomeIcon
