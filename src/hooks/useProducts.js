@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 const useProducts = () => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    axios("products.json").then((data) => setProducts(data.data));
+    axios("http://localhost:5000/product").then((data) =>
+      setProducts(data.data)
+    );
   }, []);
 
   return [products, setProducts];

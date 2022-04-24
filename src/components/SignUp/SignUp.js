@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import auth from "./../../firebase.init";
 
 const SignUp = () => {
@@ -9,6 +12,8 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const [signInWithGoogle, user1, loading1, error1] = useSignInWithGoogle(auth);
 
   const [createUserWithEmailAndPassword, user] =
     useCreateUserWithEmailAndPassword(auth);
@@ -30,7 +35,7 @@ const SignUp = () => {
     setConfirmPassword(value);
   };
 
-  if (user) {
+  if (user || user1) {
     navigate("/shop");
   }
 
@@ -102,7 +107,10 @@ const SignUp = () => {
 
           <div className="my-5 text-2xl font-semibold">Or</div>
 
-          <button className=" flex items-center justify-center w-full border-2 rounded mt-2 px-5 py-2 text-lg">
+          <button
+            onClick={() => signInWithGoogle()}
+            className=" flex items-center justify-center w-full border-2 rounded mt-2 px-5 py-2 text-lg"
+          >
             <img src="google.png" className="w-10 h-10" alt="" />
             Continue with Google
           </button>
